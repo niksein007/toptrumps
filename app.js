@@ -5,7 +5,7 @@ class Card {
     }
 
     get name() {
-        return this._name;
+        return this._name;  
     }
 
     get picture() {
