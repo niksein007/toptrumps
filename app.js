@@ -1,6 +1,8 @@
 class Cards {
     constructor(name) {
         this._name = name;
+        this._first =[];
+        this._second =[];
         this._card =[
             {name:"one", height:1},
             {name:"two", height:2},
@@ -41,6 +43,13 @@ class Cards {
 get card(){
     return this._card
 }
+    get first(){
+        return this._first
+    }
+
+    get second(){
+        return this._second
+    }
 
     set name(name){
         this._name = name;
@@ -48,37 +57,57 @@ get card(){
 
 
 //methods
-scatter = ()=>{
-    let arr = [];
-    let repeat =[];
-    //generate random number between 1 and 30
-  let ranNum = null; 
-  // use for loops to reshuffle the objects in the card[]
-  while (arr.length <= 29){
-    ranNum = Math.round( (Math.random() * 29));
-   
-   for (let i = 0; i <= repeat.length; i++) {
-       if (repeat[i] == ranNum){continue;}
-   
-    repeat.push(ranNum);
-    arr.push(this.cardIndex(ranNum));
-   } 
-  }
-  return repeat;
-  
+// schuffling the cards
+scatter (arr){
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
 }
 
-   cardHeight = (num)=>{
+//split card[]
+split(){
+    let x =this.scatter(this._card);
+    this._first = x.slice(0,15);
+    this._second = x.slice(15);
+
+}
+
+   cardHeight (num){
        return this._card[num].height;
    }
-  
-   cardName = (num)=>{
+   firstCardHeight(num){
+    return this._first[num].height;
+
+   }
+   secondCardHeight(num){
+    return this._second[num].height;
+
+   }
+
+
+   cardName (num){
     return this._card[num].name;
 }
-//this retuns an object in the card[] which is in the construtor
-cardIndex = (num)=>{
+//this retuns an object in the card[] 
+cardIndex (num){
     return this._card[num];
 }
+
+//the brain behind the game
+
+logic(num){
+    if (this.firstCardHeight(num) > this.secondCardHeight(num)) {
+        return `first`
+    } else {
+        return `second`
+    }{
+        
+    }
+    
+}
+
 }
 
 person = new Cards("person");
@@ -88,5 +117,11 @@ person = new Cards("person");
 
 // console.log(person.cardHeight(1));
 // console.log(person.cardIndex(1));
-console.log(person.scatter())
-// console.log(person.card);
+// console.log(person.scatter(person._card))
+// console.log(person.cardHeight(2));
+console.log(person.split())
+console.log(person.first.length);
+console.log(person.second.length);
+// console.log(person.firstCardHeight(0));
+// console.log(person.secondCardHeight(0));
+console.log(person.logic(0));
